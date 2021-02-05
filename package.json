@@ -147,5 +147,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "husky": "^4.3.8",
+    "prettier": "^2.2.1"
   }
 }
