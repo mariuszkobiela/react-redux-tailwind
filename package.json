@@ -73,7 +73,12 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:eslint": "eslint ./ --ignore-path .gitignore --ignore-pattern config  --ignore-pattern scripts",
+    "lint:eslint:fix": "eslint ./ --ignore-path .gitignore --ignore-pattern config  --ignore-pattern scripts --fix",
+    "lint:js": "npm run lint:eslint -- . --ignore-pattern config  --ignore-pattern scripts",
+    "prettify": "prettier --write \"**/*.{js,jsx,scss,json}\""
   },
   "eslintConfig": {
     "extends": [
@@ -152,6 +157,19 @@
   },
   "devDependencies": {
     "husky": "^4.3.8",
+    "lint-staged": "^10.5.3",
     "prettier": "^2.2.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "yarn run prettify",
+      "yarn run lint:eslint:fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
